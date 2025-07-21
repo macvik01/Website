@@ -1,0 +1,797 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Vick | Portfolio</title>
+    <style>
+        /* Reset & basics */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #121212;
+            color: #eee;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: #e50914;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            z-index: 1000;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.8);
+        }
+
+            header h1 {
+                margin: 0;
+                font-weight: 900;
+                color: #e50914;
+                font-size: 28px;
+                letter-spacing: 1.5px;
+            }
+
+        nav a {
+            margin-left: 24px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+            nav a:hover {
+                color: #ff1c2e;
+            }
+        /* Hero section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            background: url('ezgif.com-effects.gif') no-repeat center center;
+            background-size: contain;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+
+            .hero::after {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: rgba(0,0,0,0.65);
+                z-index: 1;
+            }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            color: #fff;
+        }
+
+            .hero-content h2 {
+                font-size: 48px;
+                margin-bottom: 16px;
+                font-weight: 900;
+                letter-spacing: 2px;
+            }
+
+            .hero-content p {
+                font-size: 20px;
+                line-height: 1.5;
+                margin-bottom: 32px;
+            }
+
+        .button {
+            background: #e50914;
+            padding: 14px 32px;
+            font-weight: 700;
+            font-size: 16px;
+            border-radius: 5px;
+            display: inline-block;
+            transition: background 0.3s ease;
+            color: white;
+            text-decoration: none;
+        }
+
+            .button:hover {
+                background: #ff1c2e;
+            }
+
+        /* Sections */
+        .section {
+            display: none;
+            max-width: 900px;
+            margin: 120px auto 80px auto;
+            padding: 0 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+            .section.active {
+                display: block;
+            }
+
+            .section.show {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .section h2 {
+                font-size: 36px;
+                font-weight: 800;
+                border-bottom: 3px solid #e50914;
+                padding-bottom: 8px;
+                margin-bottom: 24px;
+            }
+
+
+
+
+        /* Splash screen */
+        #splash {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+            #splash::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: url('https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzZteWppOW01MWIxd2x2cDJsZXZiOXBwaXMwMjE5aTc4ZTY5emR2MCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0MYC0LajbaPoEADu/giphy.gif') center center / cover no-repeat;
+                opacity: 0.2; /* subtle overlay */
+                z-index: -1;
+            }
+
+        .neon-title {
+            font-size: 40px;
+            text-align: center;
+            font-family: monospace;
+        }
+
+            .neon-title span {
+                display: inline-block;
+                text-shadow: 0 0 10px, 0 0 20px;
+                animation: flicker 1.5s infinite alternate;
+            }
+
+        .red {
+            color: #FF3131;
+            text-shadow: 0 0 5px #FF3131, 0 0 10px #FF3131, 0 0 20px #FF3131;
+        }
+
+        .blue {
+            color: #00FFFF;
+            text-shadow: 0 0 5px #00FFFF, 0 0 10px #00FFFF, 0 0 20px #00FFFF;
+        }
+
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                opacity: 1;
+            }
+
+            20%, 22%, 24%, 55% {
+                opacity: 0.5;
+            }
+        }
+
+        .quote {
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 18px;
+            color: #00FF7F;
+            text-align: center;
+        }
+
+
+        .loader-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .loader-gif {
+            width: 80px;
+            height: 80px;
+        }
+
+        #loader-percentage {
+            color: #00FF7F;
+            margin-top: 10px;
+            font-size: 20px;
+            font-family: monospace;
+        }
+
+        /* MAIN CONTENT hidden initially */
+        #main {
+            opacity: 0;
+            transition: opacity 1s ease;
+            background: #121212;
+            height: 100vh;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+            #main.show {
+                opacity: 1;
+            }
+
+
+
+        /* Cards for education and experience */
+        .card {
+            background: #1e1e1e;
+            padding: 24px;
+            margin-bottom: 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+            border-left: 5px solid #e50914;
+            transition: transform 0.3s ease;
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+        }
+
+            .card:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 8px 20px rgba(229, 9, 20, 0.7);
+            }
+
+            .card img {
+                width: 120px;
+                height: 120px;
+                border-radius: 8px;
+                object-fit: cover;
+                border: 3px solid #e50914;
+                flex-shrink: 0;
+                background: black;
+            }
+
+        .card-content {
+            flex: 1;
+        }
+
+        .card h3 {
+            margin: 0 0 8px 0;
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .card .subtitle {
+            font-weight: 600;
+            color: #ff5555;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .card p {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #ccc;
+            margin: 0 0 12px 0;
+        }
+
+        .tags {
+            margin-bottom: 12px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #e50914;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 20px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            color: white;
+            user-select: none;
+        }
+
+        .highlight-list {
+            list-style: disc;
+            padding-left: 20px;
+            margin: 0;
+            color: #bbb;
+            font-size: 15px;
+        }
+
+        /* Cards for skills */
+        #skills {
+            max-width: 900px;
+            margin: 50px auto 0 auto;
+        }
+
+        .skill-category {
+            margin-bottom: 35px;
+        }
+
+            .skill-category h3 {
+                margin-bottom: 15px;
+                color: #ff5555;
+                border-bottom: 2px solid #1a57b8;
+                padding-bottom: 5px;
+            }
+
+        .skill-item {
+            margin-bottom: 14px;
+        }
+
+        .skill-name {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+
+        .skill-bar-container {
+            width: 260px;
+            height: 16px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .skill-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #1e90ff, #00bfff,#ff5555);
+            border-radius: 10px 0 0 10px;
+            transition: width 0.4s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            #experience, #skills {
+                margin: 20px 10px;
+            }
+
+            .skill-bar-container {
+                width: 100%;
+            }
+
+            /* Contact */
+            #contact p {
+                font-size: 18px;
+                margin-bottom: 16px;
+                line-height: 1.6;
+            }
+
+            /* Footer */
+            footer {
+                background: #111;
+                color: #666;
+                text-align: center;
+                padding: 40px 20px;
+                font-size: 14px;
+                user-select: none;
+                letter-spacing: 0.5px;
+            }
+
+            /* Responsive */
+            @media (max-width: 768px) {
+                .hero-content h2 {
+                    font-size: 32px;
+                }
+
+                .hero-content p {
+                    font-size: 16px;
+                }
+
+                .card {
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                    .card img {
+                        width: 100px;
+                        height: 100px;
+                        margin-bottom: 16px;
+                    }
+
+                .card-content {
+                    text-align: center;
+                }
+            }
+    </style>
+</head>
+<body>
+    <!-- Splash screen -->
+    <div id="splash">
+
+
+        <h1 class="neon-title">
+            <span class="red">WELCOME TO</span> <span class="blue"> VICK's PORTFOLIO'</span>
+        </h1>
+        <p class="quote">"Legends aren’t born — they’re engineered!"</p>
+        <audio id="splashAudio" src="1.mp3" autoplay></audio>
+        <div class="loader-wrapper">
+            <img class="loader-gif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExeDdobzZ4djNmeWFnNGFzajg0Z25hZzRsYXprY3l2bDc1bXB1bmJ4OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/lj4gGwQ4EN9Ejkts0a/giphy.gif" alt="Recycling Loading">
+            <div id="loader-percentage">0%</div>
+        </div>
+    </div>
+
+
+
+    <header>
+        <h1>Vick</h1>
+        <nav>
+            <a href="#about" class="nav-link">About</a>
+            <a href="#education" class="nav-link">Education</a>
+            <a href="#experience" class="nav-link">Experience</a>
+            <a href="#Skills" class="nav-link">Skills</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h2>Hi, I'm Vick</h2>
+            <p>Mechanical Engineer | Green Energy Technologist | Aspiring PhD Researcher passionate about sustainability and innovation.</p>
+            <a href="#contact" class="button nav-link">Connect</a>
+        </div>
+    </div>
+
+    <section id="about" class="section">
+        <h2>About Me</h2>
+        <p>
+            My Full name is Vigneswaran Balasubramaniam aka Vick. I hold a Bachelor’s degree in Mechanical Engineering from Anna Unvieristy, Chennai and a Master’s in Green Energy Technology from Østfold University College, Norway. My experience spans life cycle assessments (LCA) focusing on wood material recirculation, virtual reality-based sustainable design tools, and 3D printing development. I am passionate about merging practical mechanical engineering skills with green energy innovations.
+        </p>
+    </section>
+
+    <section id="education" class="section">
+        <h2>Education</h2>
+
+        <div class="card">
+            <img src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4npt_-XlhWOnLQI6dgdsc9xLw6ns-8NRQ3ldUBOG30_E81i16VW36DfbcFJV7yQWP8VvfKjE2HRvq903cnMEUeykmZOgCoc9v31S6BpQpE365EaVnHVmgINeiewoqwnrUmFuOwf7aA=s680-w680-h510-rw" />
+            <div class="card-content">
+                <h3>Master’s in Green Energy Technology</h3>
+                <div class="subtitle">Østfold University College, Norway (2022-2024)</div>
+                <p>
+                    Specialized in sustainable energy systems, life cycle analysis, and environmental impact assessment. Completed a thesis project on wood material recirculation and transport optimization using LCA.
+                </p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4npWUSZUP3NOdVPGf38m2CWorluUDI6KGx92Okqji5phPB2wzNk21xXAGdwCUTOEreRxdN5evY6nUgNYQWuG8jhGF-kgaJaWhHaB36Fvc1ejUbaeT-e2BdSu4rzP6Unr-inJ4B7r=s680-w680-h510-rw" />
+            <div class="card-content">
+                <h3>Bachelor’s in Mechanical Engineering</h3>
+                <div class="subtitle">Anna University, Chennai (2017-2021)</div>
+                <p>
+                    Gained strong fundamentals in mechanical design, thermodynamics, and manufacturing processes.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="section">
+        <h2>Experience</h2>
+
+        <div class="card">
+            <img src="data:image/jpeg;base64,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" alt="LCA project animation" />
+            <div class="card-content">
+                <h3>Life Cycle Assessment on Timber and Plywood</h3>
+                <div class="subtitle">Omtre Oslo (Sep - Dec 2023)</div>
+
+                <div class="tags">
+                    <span class="tag">Sustainability</span>
+                    <span class="tag">LCA</span>
+                    <span class="tag">Wood Material Recirculation</span>
+                </div>
+
+                <p><strong>Project Overview:</strong> Led the Life Cycle Assessment (LCA) for wood material recirculation to improve sustainability and reduce environmental impact.</p>
+
+                <p><strong>Strengths & Skills Gained:</strong> Data analysis, environmental impact assessment, teamwork, and report writing.</p>
+
+                <ul class="highlight-list">
+                    <li>Conducted comprehensive LCA modeling and interpretation.</li>
+                    <li>Collaborated with stakeholders to improve circular economy practices.</li>
+                    <li>Developed recommendations for optimizing transport logistics.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="Screenshot 2025-06-28 152921.png" alt="VR and sustainable design" />
+            <div class="card-content">
+                <h3>SNUG EU</h3>
+                <div class="subtitle">Designing Tomorrow: Virtual Reality in field of architecture (Jan - Aug 24) </div>
+
+                <div class="tags">
+                    <span class="tag">Web Scraping</span>
+                    <span class="tag">Machine Learning</span>
+                    <span class="tag">VR Development</span>
+                    <span class="tag">Green Tech</span>
+                </div>
+
+                <p><strong>Project Overview:</strong> Developed a VR tool for sustainable design, allowing stakeholders to visualize and assess environmental impacts interactively.</p>
+
+                <p><strong>Strengths & Skills Gained:</strong> Programming, 3D modeling, UX basics, sustainability metrics.</p>
+
+                <ul class="highlight-list">
+                    <li>Integrated environmental data visualization within VR.</li>
+                    <li>Collaborated with cross-disciplinary teams.</li>
+                    <li>Improved communication of complex sustainability concepts.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpq1CTwgKnRU3gR1SntzndIKyL07zTo0saLw&s" alt="3D printer development" />
+            <div class="card-content">
+                <h3>Student Assistant for Vaccum Optimized 3D printer development</h3>
+
+                <div class="subtitle"> Østfold University College (Jan 23- Nov 24)</div>
+
+                <div class="tags">
+                    <span class="tag">Inventor</span>
+                    <span class="tag">PLC Next Automation</span>
+                    <span class="tag">Fusion360</span>
+                </div>
+
+                <p><strong>Project Overview:</strong> Assisted in designing and prototyping a 3D printer aimed at improving precision and sustainability.</p>
+
+                <p><strong>Strengths & Skills Gained:</strong> CAD design, prototyping, problem-solving, collaboration.</p>
+
+                <ul class="highlight-list">
+
+
+                    <li>Designed the Nozzle part of the 3D printer using Inventor software</li>
+                    <li>Coded using PLCNext to translate Electrical signals to functional movements </li>
+                    <li>Built Human Machine Interface website using PLCNext software for easy contrl</li>
+                    <li>ested and optimized prototype performance for precision and reliability.</li>
+                    <li>Documented design improvements and testing results.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://www.osloliftutleie.no/getfile.php/131355-1678349208/Billboard/LiftbilKjeller.jpg%20%28large%29.jpg" alt="Mechanic" />
+            <div class="card-content">
+                <h3>Mechanic</h3>
+                <div class="subtitle">Oslo Liftutleie (June 2025 - Present)</div>
+
+                <div class="tags">
+                    <span class="tag">Mechanical and Electric Maintenance</span>
+                    <span class="tag">Hydraulics</span>
+                    <span class="tag">Engine Maintainance</span>
+                    <span class="tag">Electrical connections</span>
+                    <span class="tag">Service of Aerial Lifting Platforms</span>
+                </div>
+
+                <p><strong>Role Overview:</strong>Joined as a mechanic specializing in maintenance and repair of hydraulic lifts with a focus on safety and efficiency.</p>
+
+                <p><strong>Skills Gained:</strong> Equipment maintenance, troubleshooting, safety protocols, hands-on mechanical skills.</p>
+
+                <ul class="highlight-list">
+
+                    <li>Maintaining hydraulic lift systems.</li>
+                    <li>Troubleshooting and Fixing of Electrical and Mechanic failure in all kinds of Lifts, cars and heavy machinary.</li>
+                    <li>Ensuring compliance with safety standards.</li>
+                    <li>Collaborating with operational teams for smooth functioning.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="Skills" class="section">
+        <h3>Simulation and Modeling Software</h3>
+        <div class="skill-item">
+            <div class="skill-name">PVWATTS</div>
+            <div class="skill-bar-container"><div class="skill-bar" style="width: 80%;"></div></div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-name">PVGIS</div>
+            <div class="skill-bar-container"><div class="skill-bar" style="width: 80%;"></div></div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-name">HOMER</div>
+            <div class="skill-bar-container"><div class="skill-bar" style="width: 75%;"></div></div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-name">SAM (System Advisor Model)</div>
+            <div class="skill-bar-container"><div class="skill-bar" style="width: 75%;"></div></div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-name">IDA ICE</div>
+            <div class="skill-bar-container"><div class="skill-bar" style="width: 70%;"></div></div>
+        </div>
+        </div>
+
+        <div class="skill-category">
+            <h3>Life Cycle Assessment Tools</h3>
+            <div class="skill-item">
+                <div class="skill-name">SIMAPRO LCA</div>
+                <div class="skill-bar-container"><div class="skill-bar" style="width: 85%;"></div></div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">OneClickLCA</div>
+                <div class="skill-bar-container"><div class="skill-bar" style="width: 80%;"></div></div>
+            </div>
+        </div>
+
+        <div class="skill-category">
+            <h3>CAD Software</h3>
+            <div class="skill-item">
+                <div class="skill-name">Inventor</div>
+                <div class="skill-bar-container"><div class="skill-bar" style="width: 85%;"></div></div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">AutoCAD</div>
+                <div class="skill-bar-container"><div class="skill-bar" style="width: 90%;"></div></div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">Fusion360</div>
+                <div class="skill-bar-container"><div class="skill-bar" style="width: 80%;"></div></div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">SolidWorks</div>
+                <div class="skill-bar-container"><div class="skill-bar" style="width: 75%;"></div></div>
+            </div>
+        </div>
+
+        <div class="skill-category">
+            <h3>Data Analysis Tools</h3>
+            <div class="skill-item">
+                <div class="skill-name">Python (EnergyPlus)</div>
+                <div class="skill-bar-container"><div class="skill-bar" style="width: 75%;"></div></div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">MATLAB</div>
+                <div class="skill-bar-container"><div class="skill-bar" style="width: 75%;"></div></div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">GRANTA</div>
+                <div class="skill-bar-container"><div class="skill-bar" style="width: 65%;"></div></div>
+            </div>
+        </div>
+
+        <div class="skill-category">
+            <h3>GIS Software</h3>
+            <div class="skill-item">
+                <div class="skill-name">QGIS</div>
+                <div class="skill-bar-container"><div class="skill-bar" style="width: 70%;"></div></div>
+            </div>
+        </div>
+    </section>
+
+
+    </section>
+
+    <section id="contact" class="section">
+        <h2>Contact Me</h2>
+        <p>Email: <a href="mailto:gameswaran31@gmail.com">gameswaran31@gmail.com</a></p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/vb7/" target="_blank" rel="noopener noreferrer">linkedin.com/in/vigneswaran</a></p>
+        <a href="mailto:gameswaran31@gmail.com" class="button">Send Email</a>
+    </section>
+
+    <footer>
+        &copy; 2025 Vigneswaran Balasubramaniam
+    </footer>
+
+    <script>
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.section');
+
+        function hideAllSections() {
+            sections.forEach(sec => {
+                sec.classList.remove('active', 'show');
+            });
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+
+                hideAllSections();
+
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                    setTimeout(() => {
+                        targetSection.classList.add('show');
+                        window.scrollTo({ top: targetSection.offsetTop - 80, behavior: 'smooth' });
+                    }, 50);
+                }
+            });
+        });
+
+        // Show "About" section by default on page load
+        window.addEventListener('load', () => {
+            const aboutSection = document.getElementById('about');
+            aboutSection.classList.add('active');
+            setTimeout(() => aboutSection.classList.add('show'), 50);
+        });
+    </script>
+
+    <script>
+        window.addEventListener('load', () => {
+            const splash = document.getElementById('splash');
+            const audio = document.getElementById('splashAudio');
+            const loaderPercentage = document.getElementById('loader-percentage');
+
+            // Try to play the audio, fallback to click if blocked
+            audio.play().catch(() => {
+                document.body.addEventListener('click', () => audio.play(), { once: true });
+            });
+
+            // Audio volume fade out function
+            function fadeOutAudio(audioElement, duration) {
+                let fadeInterval = 25;
+                let fadeSteps = duration / fadeInterval;
+                let fadeStepAmount = audioElement.volume / fadeSteps;
+
+                let fadeAudio = setInterval(() => {
+                    if (audioElement.volume > 0.05) {
+                        audioElement.volume = Math.max(0, audioElement.volume - fadeStepAmount);
+                    } else {
+                        audioElement.volume = 0;
+                        audioElement.pause();
+                        clearInterval(fadeAudio);
+                    }
+                }, fadeInterval);
+            }
+
+
+            let counter = 0;
+            const duration = 6000; // 5 seconds
+            const intervalTime = 50; // ms
+            const increment = 100 / (duration / intervalTime);
+
+            const interval = setInterval(() => {
+                counter += increment;
+                if (counter >= 100) {
+                    counter = 100;
+                    clearInterval(interval);
+
+                    // Optional: Hide splash after loading finishes
+                    document.getElementById('splash').style.opacity = 0;
+                    setTimeout(() => {
+                        document.getElementById('splash').style.display = 'none';
+                    }, 500);
+                }
+                loaderPercentage.innerText = `${Math.round(counter)}%`;
+            }, intervalTime);
+        });
+
+
+    </script>
+
+
+
+
+</body>
+</html>
+
